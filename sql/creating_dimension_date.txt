@@ -1,0 +1,22 @@
+CREATE TABLE dim_date (
+	date_key INTEGER PRIMARY KEY,
+	year SMALLINT CHECK (year BETWEEN 2011 AND 2019),
+	month SMALLINT CHECK (month BETWEEN 1 AND 12),
+	day SMALLINT CHECK (day BETWEEN 1 AND 31),
+	day_of_week VARCHAR(9) CHECK (day_of_week IN (
+													"monday",
+													"tuesday",
+													"wednesday",
+													"thursday",
+													"friday",
+													"saturday",
+													"sunday")),
+	weekend BOOLEAN,
+	holiday VARCHAR(20),
+	holiday BOOLEAN,
+	time_of_day VARCHAR(10) CHECK (time_of_day IN (
+													"morning", -- 6am to 12pm
+													"afternoon", -- 12pm to 6pm
+													"evening", -- 6pm to 12am
+													"night")) -- 12am to 6am
+)
