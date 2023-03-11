@@ -6,4 +6,4 @@ CREATE TABLE dim_location (
 	floor_level SMALLINT CHECK (floor_level > 0),
 	postal_code VARCHAR(6), -- LNLNLN
 	dissemination_area SMALLINT
-)
+);
