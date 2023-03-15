@@ -9,7 +9,7 @@ CREATE TABLE dim_demographics (
 	average_family_size FLOAT CHECK (average_family_size>=1),
 	average_income NUMERIC(11,2) CHECK (average_income >= 0),
 	median_income NUMERIC(11,2) CHECK (median_income >= 0),
-	mother_tongue_official_percentage FLOAT CHECK (mother_tongue_official_percentage BETWEEN 0 and 100),
-	mother_tongue_unofficial_percentage FLOAT CHECK (mother_tongue_official_percentage BETWEEN 0 and 100),
+	mother_tongue_official_percentage FLOAT CHECK (mother_tongue_official_percentage BETWEEN 0 AND 100),
+	mother_tongue_unofficial_percentage FLOAT CHECK (mother_tongue_official_percentage BETWEEN 0 AND 100),
 	census_year INTEGER CHECK (census_year=2011 OR census_year=2016 OR census_year=2021)
 );
