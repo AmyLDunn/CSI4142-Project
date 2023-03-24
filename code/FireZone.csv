@@ -1,0 +1,87 @@
+index,ADDRESS,MUNICIPALITY_NAME,ID,STATION,WARD,WARD_NAME,TYPE_DESC,Latitude,Longitude
+0,900 Tapscott Rd,Scarborough,2,211.0,23,Scarborough North,Fire Station,-79.2428700353868,43.8239927252015
+2,106 Ascot Ave,former Toronto,37,342.0,9,Davenport,Fire Station,-79.4486262604651,43.6793661319391
+3,65 Hendrick Ave,former Toronto,36,343.0,12,Toronto-St. Paul's,Fire Station,-79.4307521572934,43.68010515177521
+4,260 Adelaide St W,former Toronto,85,332.0,10,Spadina-Fort York,Fire Station,-79.3895641902632,43.6483065339531
+5,745 Meadowvale Rd,Scarborough,68,214.0,25,Scarborough-Rouge Park,Fire Station,-79.1636016041726,43.7942107669436
+6,140 Lansdowne Ave,former Toronto,28,426.0,4,Parkdale-High Park,Fire Station,-79.4388667003996,43.6450864408369
+7,590 Jane St,York,30,422.0,4,Parkdale-High Park,Fire Station,-79.4909411711192,43.6644021870805
+8,10 William Carson Cres,North York,91,121.0,15,Don Valley West,Fire Station,-79.4067807494981,43.7485400772289
+9,267 Humberline Dr,Etobicoke,81,412.0,1,Etobicoke North,Fire Station,-79.6176378075318,43.7381082893591
+10,16 Montgomery Ave,former Toronto,7,134.0,8,Eglinton-Lawrence,Fire Station,-79.3997683142874,43.709656759521
+11,12 Grosvenor St,former Toronto,47,314.0,13,Toronto Centre,Fire Station,-79.3846617684612,43.6630574201831
+12,33 Claremont St,former Toronto,41,331.0,10,Spadina-Fort York,Fire Station,-79.40977375240172,43.6473361193742
+13,115 Parkway Forest Dr,North York,14,115.0,17,Don Valley North,Fire Station,-79.340686070112,43.774403551164404
+14,399 The West Mall,Etobicoke,71,,2,Etobicoke Centre,Admin Civic Centre,-79.5654527814785,43.6437720275364
+15,476 Lawrence Ave W,North York,9,132.0,8,Eglinton-Lawrence,Fire Station,-79.4285718669164,43.7197981523396
+16,615 Royal York Rd,Etobicoke,25,433.0,3,Etobicoke-Lakeshore,Fire Station,-79.5029381693498,43.628018538118205
+17,947 Martin Grove Rd,Etobicoke,22,441.0,1,Etobicoke North,Fire Station,-79.5719196489125,43.6949604663995
+18,555 Oakwood Ave,York,38,341.0,12,Toronto-St. Paul's,Fire Station,-79.4411405905638,43.6945203032832
+19,3 Lunness Rd,Etobicoke,24,434.0,3,Etobicoke-Lakeshore,Fire Station,-79.5439889406404,43.6025703358919
+20,20 Balmoral Ave,former Toronto,50,311.0,12,Toronto-St. Paul's,Fire Station,-79.3939758413006,43.6859508063859
+21,153 Chatham Ave,former Toronto,86,323.0,14,Toronto-Danforth,Fire Station,-79.3346621153039,43.6795428878229
+22,40 Coronation Dr,Scarborough,57,234.0,24,Scarborough-Guildwood,Fire Station,-79.1915220291274,43.7610681663423
+25,2575 Eglinton Ave E,Scarborough,66,221.0,20,Scarborough Southwest,Fire Station,-79.2550627035035,43.7347901432983
+26,1313 Woodbine Ave,East York,63,224.0,19,Beaches-East York,Fire Station,-79.3165970101621,43.6951874596139
+27,2340 Birchmount Rd,Scarborough,52,244.0,22,Scarborough-Agincourt,Fire Station,-79.2991153286616,43.7816824952725
+28,87 Main St,former Toronto,61,226.0,19,Beaches-East York,Fire Station,-79.2990652659353,43.681923340992405
+29,143 Bond Ave,North York,12,123.0,16,Don Valley East,Fire Station,-79.346726033251,43.7458140063562
+30,3135 Yonge St,former Toronto,10,131.0,15,Don Valley West,Fire Station,-79.4021572823979,43.7262170049856
+32,116 Dorset Rd,Scarborough,64,223.0,20,Scarborough Southwest,Fire Station,-79.2332610776553,43.7239567617954
+33,740 Markham Rd,Scarborough,59,231.0,24,Scarborough-Guildwood,Fire Station,-79.2277876628423,43.7646440088669
+34,34 Yorkville Ave,former Toronto,49,312.0,11,University-Rosedale,Fire Station,-79.3889203795552,43.6718748612736
+35,4560 Sheppard Ave E,Scarborough,53,243.0,23,Scarborough North,Fire Station,-79.2629602053098,43.7891369171176
+36,666 Renforth Dr,Etobicoke,20,444.0,2,Etobicoke Centre,Fire Station,-79.5826959880308,43.6574667398934
+37,5318 Lawrence Ave E,Scarborough,67,215.0,25,Scarborough-Rouge Park,Fire Station,-79.1480658922187,43.7773919350636
+38,358 Keele St,former Toronto,80,423.0,4,Parkdale-High Park,Fire Station,-79.4647539608107,43.6647417825914
+39,8500 Sheppard Ave E,Scarborough,75,212.0,25,Scarborough-Rouge Park,Fire Station,-79.1886200061229,43.8049322415793
+40,1904 Queen St E,former Toronto,60,227.0,19,Beaches-East York,Fire Station,-79.3050381995295,43.6691630088656
+41,755 Warden Ave,Scarborough,65,222.0,20,Scarborough Southwest,Fire Station,-79.28409061959681,43.7203994274048
+42,256 Cosburn Ave,East York,45,322.0,14,Toronto-Danforth,Fire Station,-79.3423437199078,43.6909861622398
+43,7 Lapsley Rd,Scarborough,1,213.0,23,Scarborough North,Fire Station,-79.2259619086159,43.7954066088734
+44,280 Burnhamthorpe Rd,Etobicoke,19,445.0,2,Etobicoke Centre,Fire Station,-79.5451030832103,43.649348178119
+45,1549 Albion Rd,Etobicoke,33,413.0,1,Etobicoke North,Fire Station,-79.5869058522884,43.7402187055703
+46,255 Esther Shiner Blvd,North York,78,116.0,17,Don Valley North,Fire Station,-79.3650636554859,43.7691459436276
+47,155 The East Mall,Etobicoke,26,432.0,3,Etobicoke-Lakeshore,Fire Station,-79.5493536952449,43.6233410114915
+48,3600 Danforth Ave,Scarborough,62,225.0,20,Scarborough Southwest,Fire Station,-79.2684946045652,43.6959168731747
+49,308 Prince Edward Dr S,Etobicoke,27,431.0,3,Etobicoke-Lakeshore,Fire Station,-79.5048470438209,43.6464360660255
+50,2120 Kipling Ave,Etobicoke,32,415.0,1,Etobicoke North,Fire Station,-79.5703767704744,43.7178772080563
+51,700 Seneca Hill Dr,North York,16,113.0,17,Don Valley North,Fire Station,-79.3508330020753,43.7931779343076
+52,1505 Lawrence Ave W,North York,8,133.0,5,York South-Weston,Fire Station,-79.482184879151,43.7071848480233
+53,83 Deforest Rd,former Toronto,29,425.0,4,Parkdale-High Park,Fire Station,-79.4780588288151,43.6479870238738
+54,6 Lambton Ave,York,31,421.0,5,York South-Weston,Fire Station,-79.4853016276853,43.6843003946467
+55,2753 Jane St,North York,5,142.0,7,Humber River-Black Creek,Fire Station,-79.51437064341631,43.7459827062059
+56,240 Howland Ave,former Toronto,83,344.0,11,University-Rosedale,Fire Station,-79.4118241402967,43.6729622271664
+57,132 Bellevue Ave,former Toronto,46,315.0,11,University-Rosedale,Fire Station,-79.4047817252926,43.6568245874366
+59,30 Knox Ave,former Toronto,42,326.0,14,Toronto-Danforth,Fire Station,-79.3250072916157,43.6615387594206
+60,475 Dundas St E,former Toronto,43,325.0,13,Toronto Centre,Fire Station,-79.3648542022226,43.6593705340714
+61,1724 Islington Ave,Etobicoke,21,443.0,2,Etobicoke Centre,Fire Station,-79.5385536449026,43.678071015543
+62,2220 Jane St,North York,3,146.0,7,Humber River-Black Creek,Fire Station,-79.5097760967724,43.7235728614792
+63,1009 Sheppard Ave W,North York,4,143.0,6,York Centre,Fire Station,-79.4597267967044,43.7506541444208
+64,1600 Birchmount Rd,Scarborough,51,245.0,21,Scarborough Centre,Fire Station,-79.2915184052647,43.7626918218058
+65,207 Front St E,former Toronto,84,333.0,13,Toronto Centre,Fire Station,-79.3661539690352,43.6505208079754
+66,3325 Warden Ave,Scarborough,55,241.0,22,Scarborough-Agincourt,Fire Station,-79.3238025417745,43.8140419797109
+67,20 Beffort Rd,North York,76,145.0,6,York Centre,Fire Station,-79.4600322095888,43.734755513140804
+68,200 Bermondsey Rd,North York,56,235.0,16,Don Valley East,Fire Station,-79.3149344230792,43.7242534211126
+69,2015 Lawrence Ave W,York,79,442.0,5,York South-Weston,Fire Station,-79.5123844108684,43.7005987011636
+70,75 Toryork Dr,North York,34,411.0,7,Humber River-Black Creek,Fire Station,-79.5491654346987,43.75525826208751
+71,5700 Bathurst St,North York,17,112.0,6,York Centre,Fire Station,-79.4442860463118,43.7762855215206
+73,3300 Bayview Ave,North York,18,111.0,18,Willowdale,Fire Station,-79.3936558799113,43.7901270072937
+74,12 Canterbury Pl,North York,15,114.0,18,Willowdale,Fire Station,-79.4153547749349,43.7726358500692
+75,90 Quebec St,former Toronto,82,346.0,10,Spadina-Fort York,Fire Station Seasonal,-79.42132972700702,43.6336769750109
+76,5100 Yonge St,North York,73,,18,Willowdale,Admin Civic Centre,-79.4148887450114,43.7672678891958
+77,150 Borough Dr,Scarborough,72,,21,Scarborough Centre,Admin Civic Centre,-79.2572409577755,43.7728105957421
+78,339 Queens Quay W,former Toronto,40,334.0,10,Spadina-Fort York,Fire Station,-79.388613016358,43.6376903109341
+79,840 Gerrard St E,former Toronto,44,324.0,14,Toronto-Danforth,Fire Station,-79.3435181858772,43.6677666816198
+80,441 Bloor St E,former Toronto,48,313.0,13,Toronto Centre,Fire Station,-79.3755640527746,43.6720950557577
+81,235 Cibola Ave,former Toronto,39,335.0,10,Spadina-Fort York,Fire Station,-79.3590745052274,43.6254007460108
+82,1285 Dufferin St,former Toronto,35,345.0,9,Davenport,Fire Station,-79.4382561763956,43.6673118906754
+83,325 Chaplin Cres,former Toronto,6,135.0,8,Eglinton-Lawrence,Fire Station,-79.4187941157764,43.7031244599412
+84,2545 Bayview Ave,North York,13,122.0,15,Don Valley West,Fire Station,-79.3837259589611,43.7486446150086
+85,2733 Brimley Rd,Scarborough,54,242.0,23,Scarborough North,Fire Station,-79.2772562802889,43.8069196445835
+86,1109 Leslie St,North York,11,125.0,16,Don Valley East,Fire Station,-79.3491121871106,43.721135794691
+87,4100 Keele St,North York,77,141.0,7,Humber River-Black Creek,Fire Station,-79.4927235946077,43.7668215104353
+88,130 Eighth St,Etobicoke,23,435.0,3,Etobicoke-Lakeshore,Fire Station,-79.5069699933954,43.6011185170765
+89,1550 Midland Ave,Scarborough,58,232.0,21,Scarborough Centre,Fire Station,-79.2668510713279,43.7549669455776
+90,59 Curlew Dr,North York,92,233.0,16,Don Valley East,Fire Station,-79.3143827967515,43.7439181729465
+91,231 McRae Dr,East York,87,321.0,15,Don Valley West,Fire Station,-79.3646982931217,43.7087140108462
