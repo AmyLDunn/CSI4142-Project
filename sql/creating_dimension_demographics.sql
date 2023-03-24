@@ -1,9 +1,7 @@
 CREATE TABLE dim_demographics (
 	demographics_key INTEGER PRIMARY KEY,
-	postal_code VARCHAR(6), -- LNLNLN
-	dissemination_area SMALLINT,
+	dissemination_area INTEGER,
 	population INTEGER,
-	average_age FLOAT CHECK (average_age BETWEEN 0 AND 150),
 	median_age FLOAT CHECK (median_age BETWEEN 0 AND 150),
 	total_dwellings INTEGER CHECK (total_dwellings>=0),
 	average_family_size FLOAT CHECK (average_family_size>=1),
