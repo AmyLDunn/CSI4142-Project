@@ -46,21 +46,76 @@ def get_dissemination_area(df):
         return soup.find_all("details")[6].find("a").decode_contents()
     else:
         return np.nan
-    
+
+def get_sprinkler_system(df):
+    presence = int(df['Sprinkler_System_Presence'][:1])
+    operation = int(df['Sprinkler_System_Operation'][:1])
+    if presence == 3:
+        return 'no sprinkler system'
+    elif presence == 9:
+        return 'sprinkler system presence undetermined'
+    elif operation == 1:
+        return 'sprinkler system present and operated'
+    elif operation in [2, 3, 4, 5]:
+        return 'sprinkler system present, did not operate'
+    return 'sprinkler system present, operation undetermined'
+
+def get_smoke_system(df):
+    presence = int(df['Smoke_Alarm_at_Fire_Origin'][:1])
+    if presence == 1:
+        return 'no smoke alarm'
+    elif presence == 9:
+        return 'smoke alarm presence undetermined'
+    elif presence == 2:
+        return 'smoke alarm present and operated'
+    elif presence == 3:
+        return 'smoke alarm present, did not operate'
+    return 'smoke alarm present, operation undetermined'
+
+def get_fire_system(df):
+    presence = int(df['Fire_Alarm_System_Presence'][:1])
+    operation = int(df['Fire_Alarm_System_Operation'][:1])
+    if presence == 2:
+        return 'no fire system'
+    elif presence in [8, 9]:
+        return 'fire system presence undetermined'
+    elif operation == 1:
+        return 'fire system present and operated'
+    elif operation == 2:
+        return 'fire system present, did not operate'
+    return 'fire system present, operation undetermined'
+
+# Loading raw data csv
 df = pd.read_csv("../raw_data/fire_incidents_data.csv")
+
+# Removing entries that don't have locations
 df = df[df['Longitude'].notna()]
 df = df[df['Latitude'].notna()]
 df = df[df['Last_TFS_Unit_Clear_Time'].notna()]
+
+# Filling NaN values with default ones
 df['Estimated_Dollar_Loss'] = df['Estimated_Dollar_Loss'].fillna(0)
 df['Possible_Cause'] = df['Possible_Cause'].fillna('99 - Undetermined')
+df['Sprinkler_System_Presence'] = df['Sprinkler_System_Presence'].fillna('9 - Undetermined')
+df['Sprinkler_System_Operation'] = df['Sprinkler_System_Operation'].fillna('8 - Not applicable - no sprinkler system present')
+df['Smoke_Alarm_at_Fire_Origin'] = df['Smoke_Alarm_at_Fire_Origin'].fillna('9 - Floor/suite of fire origin: Smoke alarm presence undetermined')
+df['Fire_Alarm_System_Presence'] = df['Fire_Alarm_System_Presence'].fillna('9 - Undetermined')
+df['Fire_Alarm_System_Operation'] = df['Fire_Alarm_System_Operation'].fillna('8 - Not applicable (no system)')
 
 df = df.head(20)
+# Initializing empty dataframe
 facts = pd.DataFrame()
+
+# Loading location key
 facts['location_key'] = (((df['Latitude']-43)*10000).astype(int).astype(str)+((df['Longitude']+79)*-10000).astype(int).astype(str)).astype(int)
+
+# Loading date key
 facts['date_key'] = df["TFS_Alarm_Time"].str.replace("-","").str.replace("T","").str.replace(":","").astype('int64')
+
+# Loading the weather key
 # facts['weather_key'] =
 
-# Loading the dissemination area key
+# Loading the demographics key
 locator = Nominatim(user_agent="ldunn084@uottawa.ca", timeout = 10)
 rgeocode = RateLimiter(locator.reverse, min_delay_seconds = 1, max_retries = 5)
 tqdm.tqdm.pandas()
@@ -75,9 +130,12 @@ facts = facts[facts['dissemination_area'].notna()]
 facts['year'] = df['TFS_Alarm_Time'].apply(lambda alarmTime: int(alarmTime[:4]))
 facts['dissemination_year'] = facts["year"].apply(lambda thisyear: 2011 if thisyear <= 2011 else (2016 if thisyear <= 2016 else 2021))
 facts['demographics_key'] = (facts['dissemination_year'].astype('str')+facts['dissemination_area'].astype('str')).astype('int64')
-facts.drop(columns = ['geom','address', 'postal_code', 'dissemination_area', 'year', 'dissemination_year'])
+facts = facts.drop(columns = ['geom','address', 'postal_code', 'dissemination_area', 'year', 'dissemination_year'])
 
-# facts['fire_ward_Key'] = 
+# Loading the fire ward key
+# facts['fire_ward_Key'] =
+
+# Loading the facts from the raw data
 facts['response_time'] = df.apply(calculate_response_time, axis = 1)
 facts['damage_cad'] = df['Estimated_Dollar_Loss']
 facts['casualties'] = df['Civilian_Casualties']
@@ -86,7 +144,8 @@ facts['people_rescued'] = df['Count_of_Persons_Rescued']
 facts['responding_personel'] = df['Number_of_responding_personnel'].astype('int')
 facts['responding_apparatus'] = df['Number_of_responding_apparatus'].astype('int')
 facts['possible_cause'] = df.apply(get_possible_cause, axis = 1)
-# facts['sprinkler_system'] = 
-# facts['smoke_system'] =
-# facts['fire_system'] = 
+facts['sprinkler_system'] = df.apply(get_sprinkler_system, axis = 1)
+facts['smoke_system'] = df.apply(get_smoke_system, axis = 1)
+facts['fire_system'] = df.apply(get_fire_system, axis = 1)
+
 print(facts)
