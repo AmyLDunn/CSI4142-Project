@@ -1,5 +1,5 @@
 CREATE TABLE dim_demographics (
-	demographics_key INTEGER PRIMARY KEY,
+	demographics_key BIGINT PRIMARY KEY,
 	dissemination_area INTEGER,
 	population INTEGER,
 	median_age FLOAT CHECK (median_age BETWEEN 0 AND 150),
