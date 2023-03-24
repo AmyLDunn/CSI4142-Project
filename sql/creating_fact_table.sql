@@ -25,7 +25,7 @@ CREATE TABLE fact_fire_incidents (
 	date_key INTEGER FOREIGN KEY dim_date(date_key),
 	weather_key INTEGER FOREIGN KEY dim_weather(weather_key),
 	demographics_key INTEGER FOREIGN KEY dim_demographics(demographics_key),
-	fire_station_key INTEGER FOREIGN KEY dim_fire_station(fire_station_key),
+	fire_ward_key INTEGER FOREIGN KEY dim_fire_station(fire_station_key),
 	response_time SMALLINT CHECK (response_time >= 0),
 	damage_cad NUMERIC(11,2) CHECK (damage_cad >= 0),
 	casualties SMALLINT CHECK (casualties >= 0),
