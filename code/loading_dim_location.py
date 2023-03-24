@@ -72,4 +72,4 @@ unique_locations["Dissemination_area"] = unique_locations["Postal_Code"].progres
 unique_locations = unique_locations[unique_locations['Dissemination_area'].notna()]
 
 # Print to csv
-unique_locations.to_csv('../sample_dimension_data/postal_codes.csv',sep=',',encoding='utf-8')
+unique_locations.to_csv('../sample_dimension_data/dim_location.csv',sep=',',encoding='utf-8')

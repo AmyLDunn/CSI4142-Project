@@ -5,7 +5,7 @@ CREATE TYPE part_of_day AS ENUM ('night', -- 12am to before 6am
 								 );
 CREATE TABLE dim_date (
 	date_key INTEGER PRIMARY KEY,
-	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01 00:00:00' AND '2019-12-31 23:59:59'),
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2019-12-31T23:59:59'),
 	year SMALLINT CHECK (year BETWEEN 2011 AND 2019),
 	month SMALLINT CHECK (month BETWEEN 1 AND 12),
 	day SMALLINT CHECK (day BETWEEN 1 AND 31),
@@ -14,6 +14,7 @@ CREATE TABLE dim_date (
 	hour SMALLINT CHECK (hour BETWEEN 0 AND 23),
 	minute SMALLINT CHECK (minute BETWEEN 0 AND 59),
 	holiday VARCHAR(20),
-	holiday BOOLEAN,
-	time_of_day part_of_day
+	is_holiday BOOLEAN,
+	time_of_day part_of_day,
+	census_year SMALLINT CHECK (census_year IN [2011, 2016, 2021])
 );
