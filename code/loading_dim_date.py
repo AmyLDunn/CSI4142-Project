@@ -79,3 +79,9 @@ df = df.drop(columns=["TFS_Alarm_Time"])
 
 # Printing to csv
 df.to_csv('../sample_dimension_data/dim_date.csv',sep=',',encoding='utf-8')
+
+# save to database
+import psycopg2
+import sqlalchemy
+engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
+result.to_sql(name='dim_date', con=engine,if_exists='append', index=False)

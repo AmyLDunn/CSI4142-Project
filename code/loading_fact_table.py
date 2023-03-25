@@ -148,4 +148,8 @@ facts['sprinkler_system'] = df.apply(get_sprinkler_system, axis = 1)
 facts['smoke_system'] = df.apply(get_smoke_system, axis = 1)
 facts['fire_system'] = df.apply(get_fire_system, axis = 1)
 
-print(facts)
+# save to database
+import psycopg2
+import sqlalchemy
+engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
+result.to_sql(name='fact_fire_incidents', con=engine,if_exists='append', index=False)

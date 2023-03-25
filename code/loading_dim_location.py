@@ -73,3 +73,9 @@ unique_locations = unique_locations[unique_locations['Dissemination_area'].notna
 
 # Print to csv
 unique_locations.to_csv('../sample_dimension_data/dim_location.csv',sep=',',encoding='utf-8')
+
+# save to database
+import psycopg2
+import sqlalchemy
+engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
+result.to_sql(name='dim_location', con=engine,if_exists='append', index=False)
