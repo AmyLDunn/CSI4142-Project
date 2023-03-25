@@ -76,14 +76,14 @@ def get_fire_system(df):
     presence = int(df['Fire_Alarm_System_Presence'][:1])
     operation = int(df['Fire_Alarm_System_Operation'][:1])
     if presence == 2:
-        return 'no fire system'
+        return 'no fire alarm'
     elif presence in [8, 9]:
-        return 'fire system presence undetermined'
+        return 'fire alarm presence undetermined'
     elif operation == 1:
-        return 'fire system present and operated'
+        return 'fire alarm present and operated'
     elif operation == 2:
-        return 'fire system present, did not operate'
-    return 'fire system present, operation undetermined'
+        return 'fire alarm present, did not operate'
+    return 'fire alarm present, operation undetermined'
 
 # Loading raw data csv
 df = pd.read_csv("../raw_data/fire_incidents_data.csv")
