@@ -99,7 +99,7 @@ CREATE TABLE fact_fire_incidents (
 	responding_personel SMALLINT CHECK (responding_personel >= 0),
 	responding_apparatus SMALLINT CHECK (responding_apparatus >= 0),
 	possible_cause causes,
-	sprinkler_stystem sprinkler,
+	sprinkler_system sprinkler,
 	smoke_system smoke_alarm,
 	fire_system fire_alarm
 );
