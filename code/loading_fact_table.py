@@ -152,4 +152,4 @@ facts['fire_system'] = df.apply(get_fire_system, axis = 1)
 import psycopg2
 import sqlalchemy
 engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
-result.to_sql(name='fact_fire_incidents', con=engine,if_exists='append', index=False)
+facts.to_sql(name='fact_fire_incidents', con=engine,if_exists='append', index=False)

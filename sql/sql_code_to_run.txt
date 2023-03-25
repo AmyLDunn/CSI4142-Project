@@ -45,7 +45,7 @@ CREATE TABLE dim_demographics (
 
 CREATE TABLE dim_date (
 	date_key BIGINT PRIMARY KEY,
-	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2019-12-31T23:59:59'),
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
 	year SMALLINT CHECK (year BETWEEN 2011 AND 2019),
 	month SMALLINT CHECK (month BETWEEN 1 AND 12),
 	day SMALLINT CHECK (day BETWEEN 1 AND 31),
@@ -63,10 +63,10 @@ CREATE TABLE dim_location (
 	location_key BIGINT PRIMARY KEY,
 	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
 	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
-	nearest_intersection TEXT,
-	floor_level SMALLINT CHECK (floor_level > 0),
-	postal_code VARCHAR(6), -- LNLNLN
-	dissemination_area SMALLINT
+	nearest_intersection VARCHAR(100),
+	floor_level SMALLINT CHECK (floor_level >= 0),
+	postal_code VARCHAR(7), -- LNLNLN
+	dissemination_area INTEGER
 );
 
 CREATE TABLE dim_weather (
