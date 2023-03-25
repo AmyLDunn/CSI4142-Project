@@ -113,7 +113,9 @@ facts['location_key'] = (((df['Latitude']-43)*10000).astype(int).astype(str)+((d
 facts['date_key'] = df["TFS_Alarm_Time"].str.replace("-","").str.replace("T","").str.replace(":","").astype('int64')
 
 # Loading the weather key
-# facts['weather_key'] =
+facts['weather_key'] = df['TFS_Alarm_Time'].str.replace("-","").str.replace("T","").str.replace(":","")
+facts['weather_key'] = facts['weather_key'].apply(lambda key: key[2:-2])
+facts['weather_key'] = (facts['weather_key']+((df['Latitude']-43)*10000).astype(int).astype(str)+((df['Longitude']+79)*-10000).astype(int).astype(str)).astype('int64')
 
 # Loading the demographics key
 locator = Nominatim(user_agent="ldunn084@uottawa.ca", timeout = 10)
@@ -133,7 +135,7 @@ facts['demographics_key'] = (facts['dissemination_year'].astype('str')+facts['di
 facts = facts.drop(columns = ['geom','address', 'postal_code', 'dissemination_area', 'year', 'dissemination_year'])
 
 # Loading the fire ward key
-# facts['fire_ward_Key'] =
+facts['fire_ward_key'] = df['Incident_Ward']
 
 # Loading the facts from the raw data
 facts['response_time'] = df.apply(calculate_response_time, axis = 1)
