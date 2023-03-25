@@ -56,7 +56,7 @@ CREATE TABLE dim_date (
 	holiday VARCHAR(20),
 	is_holiday BOOLEAN,
 	time_of_day part_of_day,
-	census_year SMALLINT CHECK (census_year IN [2011, 2016, 2021])
+	census_year SMALLINT CHECK (census_year=2011 OR census_year=2016 OR census_year=2021)
 );
 
 CREATE TABLE dim_location (
@@ -70,12 +70,11 @@ CREATE TABLE dim_location (
 );
 
 CREATE TABLE dim_weather (
-	weather_key BIG INT PRIMARY KEY,
+	weather_key BIGINT PRIMARY KEY,
 	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
 	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
-	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2019-12-31T23:59:59'),
-)
-
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2019-12-31T23:59:59')
+);
 
 CREATE TABLE fact_fire_incidents (
 	location_key BIGINT FOREIGN KEY dim_location(location_key),
