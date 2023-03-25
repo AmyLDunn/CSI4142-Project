@@ -1,0 +1,105 @@
+CREATE TYPE causes AS ENUM ('intentional',
+                            'unintentional');
+
+CREATE TYPE sprinkler AS ENUM ('no sprinkler system',
+                               'sprinkler system present and operated',
+							   'sprinkler system present, did not operate',
+							   'sprinkler system present, operation undetermined',
+							   'sprinkler system presence undetermined');
+
+CREATE TYPE smoke_alarm AS ENUM ('no smoke alarm',
+                                 'smoke alarm present and operated',
+						         'smoke alarm present, did not operate',
+						         'smoke alarm present, operation undetermined',
+						         'smoke alarm presence undetermined');
+
+CREATE TYPE fire_alarm AS ENUM ('no fire alarm',
+                                'fire alarm present and operated',
+						        'fire alarm present, did not operate',
+						        'fire alarm present, operation undetermined',
+						        'fire alarm presence undetermined');
+
+CREATE TYPE part_of_day AS ENUM ('night', -- 12am to before 6am
+								 'morning', -- 6am to before 12pm
+                                 'afternoon', -- 12pm to before 6pm
+								 'evening' -- 6pm to before 12am
+								 );
+
+CREATE TABLE dim_fire_ward (
+	fire_ward_key INTEGER PRIMARY KEY,
+	stations_in_ward INTEGER CHECK (stations_in_ward>0)
+);
+
+CREATE TABLE dim_demographics (
+	demographics_key BIGINT PRIMARY KEY,
+	dissemination_area INTEGER,
+	population INTEGER,
+	median_age FLOAT CHECK (median_age BETWEEN 0 AND 150),
+	total_dwellings FLOAT CHECK (total_dwellings>=0),
+	average_household_size FLOAT CHECK (average_household_size>=1),
+	median_household_income NUMERIC(11,2) CHECK (median_household_income >= 0),
+	mother_tongue_official_percentage FLOAT CHECK (mother_tongue_official_percentage BETWEEN 0 AND 100),
+	mother_tongue_unofficial_percentage FLOAT CHECK (mother_tongue_unofficial_percentage BETWEEN 0 AND 100),
+	census_year INTEGER CHECK (census_year=2011 OR census_year=2016 OR census_year=2021)
+);
+
+CREATE TABLE dim_date (
+	date_key BIGINT PRIMARY KEY,
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	year SMALLINT CHECK (year BETWEEN 2011 AND 2021),
+	month SMALLINT CHECK (month BETWEEN 1 AND 12),
+	day SMALLINT CHECK (day BETWEEN 1 AND 31),
+	day_of_week SMALLINT CHECK (day_of_week BETWEEN 1 AND 7),
+	weekend BOOLEAN,
+	hour SMALLINT CHECK (hour BETWEEN 0 AND 23),
+	minute SMALLINT CHECK (minute BETWEEN 0 AND 59),
+	holiday VARCHAR(20),
+	is_holiday BOOLEAN,
+	time_of_day part_of_day,
+	census_year SMALLINT CHECK (census_year=2011 OR census_year=2016 OR census_year=2021)
+);
+
+CREATE TABLE dim_location (
+	location_key BIGINT PRIMARY KEY,
+	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
+	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
+	nearest_intersection VARCHAR(100),
+	floor_level SMALLINT CHECK (floor_level >= 0),
+	postal_code VARCHAR(7), -- LNLNLN
+	dissemination_area INTEGER
+);
+
+CREATE TABLE dim_weather (
+	weather_key BIGINT PRIMARY KEY,
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
+	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
+	start_time TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	end_time TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	temperature FLOAT, 
+	dewpoint FLOAT,
+	relative_humidity FLOAT,
+	precipitaion FLOAT,
+	snow FLOAT,
+	wind_direction FLOAT,
+	wind_speed FLOAT
+);
+
+CREATE TABLE fact_fire_incidents (
+	location_key BIGINT REFERENCES dim_location(location_key),
+	date_key BIGINT REFERENCES dim_date(date_key),
+	weather_key BIGINT REFERENCES dim_weather(weather_key),
+	demographics_key BIGINT REFERENCES dim_demographics(demographics_key),
+	fire_ward_key INTEGER REFERENCES dim_fire_ward(fire_ward_key),
+	response_time TEXT,
+	damage_cad NUMERIC(11,2) CHECK (damage_cad >= 0),
+	casualties SMALLINT CHECK (casualties >= 0),
+	people_displaced SMALLINT CHECK (people_displaced >= 0),
+	people_rescued SMALLINT CHECK (people_rescued >= 0),
+	responding_personel SMALLINT CHECK (responding_personel >= 0),
+	responding_apparatus SMALLINT CHECK (responding_apparatus >= 0),
+	possible_cause causes,
+	sprinkler_system sprinkler,
+	smoke_system smoke_alarm,
+	fire_system fire_alarm
+);
