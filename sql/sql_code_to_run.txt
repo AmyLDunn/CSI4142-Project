@@ -71,9 +71,18 @@ CREATE TABLE dim_location (
 
 CREATE TABLE dim_weather (
 	weather_key BIGINT PRIMARY KEY,
-	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
+	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
 	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
-	datetime TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2019-12-31T23:59:59')
+	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
+	start_time TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	end_time TIMESTAMP CHECK (datetime BETWEEN '2011-01-01T00:00:00' AND '2021-12-31T23:59:59'),
+	temperature FLOAT, 
+	dewpoint FLOAT,
+	relative_humidity FLOAT,
+	precipitaion FLOAT,
+	snow FLOAT,
+	wind_direction FLOAT,
+	wind_speed FLOAT
 );
 
 CREATE TABLE fact_fire_incidents (
