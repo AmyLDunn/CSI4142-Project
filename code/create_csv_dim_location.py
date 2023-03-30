@@ -45,7 +45,6 @@ df['Level_Of_Origin'] = df['Level_Of_Origin'].fillna(1)
 # Get the unique locations based on longitude and latitude
 unique_locations = df.drop_duplicates(subset=['Longitude', 'Latitude'])
 
-unique_locations = unique_locations.head(50)
 # Generating the location key from the first four decimals of lat and long
 unique_locations['Location_key'] = (((unique_locations['Latitude']-43)*10000).astype(int).astype(str)+((unique_locations['Longitude']+79)*-10000).astype(int).astype(str)).astype(int)
 
@@ -76,4 +75,4 @@ unique_locations= unique_locations.rename(columns={'Location_key':'location_key'
 'Intersection':'nearest_intersection','Level_Of_Origin':'floor_level','Postal_Code':'postal_code','Dissemination_area':'dissemination_area'})
 
 # Print to csv
-unique_locations.to_csv('../sample_dimension_data/dim_location.csv',sep=',',encoding='utf-8')
+unique_locations.to_csv('../raw_data/dim_location.csv',sep=',',encoding='utf-8')
