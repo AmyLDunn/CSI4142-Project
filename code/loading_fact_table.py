@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from datetime import date
 from datetime import datetime
 from geopy.geocoders import Nominatim
@@ -102,7 +103,6 @@ df['Smoke_Alarm_at_Fire_Origin'] = df['Smoke_Alarm_at_Fire_Origin'].fillna('9 - 
 df['Fire_Alarm_System_Presence'] = df['Fire_Alarm_System_Presence'].fillna('9 - Undetermined')
 df['Fire_Alarm_System_Operation'] = df['Fire_Alarm_System_Operation'].fillna('8 - Not applicable (no system)')
 
-df = df.head(20)
 # Initializing empty dataframe
 facts = pd.DataFrame()
 
@@ -123,14 +123,29 @@ rgeocode = RateLimiter(locator.reverse, min_delay_seconds = 1, max_retries = 5)
 tqdm.tqdm.pandas()
 facts['geom'] = df["Latitude"].map(str)+","+df["Longitude"].map(str)
 facts['address'] = facts['geom'].progress_apply(rgeocode)
+#facts.to_csv('../raw_data/checkpoint1.csv',sep=',',encoding='utf-8')
+#facts = pd.read_csv("../raw_data/checkpoint1.csv")
+#facts = facts.drop(columns=["Unnamed: 0"])
+#print(facts.head())
 facts['postal_code'] = facts['address'].progress_apply(lambda loc: loc.raw["address"]["postcode"]
                                                         if (loc and "postcode" in loc.raw["address"].keys() and len(loc.raw["address"]["postcode"])==7)
                                                         else np.nan)
+#facts.to_csv('../raw_data/checkpoint2.csv',sep=',',encoding='utf-8')
+#facts = pd.read_csv("../raw_data/checkpoint2.csv")
+#facts = facts.drop(columns=["Unnamed: 0"])
+#print(facts.head())
+
 facts = facts[facts['postal_code'].notna()]
 facts['dissemination_area'] = facts['postal_code'].progress_apply(get_dissemination_area)
+#facts.to_csv('../raw_data/checkpoint3.csv',sep=',',encoding='utf-8')
+#facts = pd.read_csv("../raw_data/checkpoint3.csv")
+#facts = facts.drop(columns=["Unnamed: 0"])
+#print(facts.head())
 facts = facts[facts['dissemination_area'].notna()]
 facts['year'] = df['TFS_Alarm_Time'].apply(lambda alarmTime: int(alarmTime[:4]))
 facts['dissemination_year'] = facts["year"].apply(lambda thisyear: 2011 if thisyear <= 2011 else (2016 if thisyear <= 2016 else 2021))
+facts=facts[facts['dissemination_area'] != 'North Battleford']
+
 facts['demographics_key'] = (facts['dissemination_year'].astype('str')+facts['dissemination_area'].astype('str')).astype('int64')
 facts = facts.drop(columns = ['geom','address', 'postal_code', 'dissemination_area', 'year', 'dissemination_year'])
 
@@ -143,15 +158,13 @@ facts['damage_cad'] = df['Estimated_Dollar_Loss']
 facts['casualties'] = df['Civilian_Casualties']
 facts['people_displaced'] = df['Estimated_Number_Of_Persons_Displaced']
 facts['people_rescued'] = df['Count_of_Persons_Rescued']
-facts['responding_personel'] = df['Number_of_responding_personnel'].astype('int')
-facts['responding_apparatus'] = df['Number_of_responding_apparatus'].astype('int')
+facts['responding_personel'] = df['Number_of_responding_personnel']
+facts['responding_apparatus'] = df['Number_of_responding_apparatus']
 facts['possible_cause'] = df.apply(get_possible_cause, axis = 1)
 facts['sprinkler_system'] = df.apply(get_sprinkler_system, axis = 1)
 facts['smoke_system'] = df.apply(get_smoke_system, axis = 1)
 facts['fire_system'] = df.apply(get_fire_system, axis = 1)
 
-# save to database
-import psycopg2
-import sqlalchemy
-engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
-facts.to_sql(name='fact_fire_incidents', con=engine,if_exists='append', index=False)
+
+#save table to csv
+facts.to_csv('../raw_data/fact_table.csv',sep=',',encoding='utf-8')

@@ -63,8 +63,8 @@ CREATE TABLE dim_location (
 	location_key BIGINT PRIMARY KEY,
 	longitude NUMERIC(9,6) CHECK (longitude BETWEEN -180 AND 180), -- ###.######
 	latitude NUMERIC(9,6) CHECK (latitude BETWEEN -90 AND 90), -- ###.######
-	nearest_intersection VARCHAR(100),
-	floor_level SMALLINT CHECK (floor_level >= 0),
+	nearest_intersection VARCHAR(500),
+	floor_level SMALLINT,
 	postal_code VARCHAR(7), -- LNLNLN
 	dissemination_area INTEGER
 );
