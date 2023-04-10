@@ -1,6 +1,6 @@
 # CSI4142-Project
 
-Compilation instructions
+## Compilation instructions
 
 The code can be found in our gitHub repository here: AmyLDunn/CSI4142-Project (github.com)
 
