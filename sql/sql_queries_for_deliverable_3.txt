@@ -1,3 +1,7 @@
+###########################
+#SELECT ALL FOR REFERENCE #
+###########################
+
 SELECT * FROM dim_date T, dim_demographics D, dim_fire_ward Z, dim_location L,
 dim_weather W, fact_fire_incidents F
 WHERE T.date_key=F.date_key and D.demographics_key=F.demographics_key and
@@ -10,12 +14,23 @@ W.weather_key=F.weather_key
 ##########
 
 SELECT year, sum(F.damage_cad) AS Total_Damage_in_CAD,
-sum(casualties) AS Total_Casualities, count(year) AS number_of_incidents
+sum(casualties) AS Total_Casualties, count(year) AS number_of_incidents
 FROM dim_date T, fact_fire_incidents F
 WHERE T.date_key=F.date_key 
 GROUP BY ROLLUP(year)
 ORDER BY year
 
+#############
+#Drill-down #
+#############
+
+SELECT T.time_of_day, sum(F.damage_cad) AS Total_Damage_in_CAD, 
+sum(casualties) AS Total_Casualties, 
+count(time_of_day) as number_of_incidents
+FROM dim_date T, fact_fire_incidents F
+WHERE T.date_key= F.date_key
+GROUP BY ROLLUP(time_of_day)
+ORDER BY time_of_day
 
 ########
 #Slice #
@@ -35,11 +50,11 @@ SELECT * FROM dim_date T, dim_demographics D, dim_fire_ward Z, dim_location L,
 dim_weather W, fact_fire_incidents F
 WHERE T.date_key=F.date_key and D.demographics_key=F.demographics_key and
 Z.fire_ward_key=F.fire_ward_key and L.location_key=F.location_key and
-W.weather_key=F.weather_key and T.is_holiday=true and W.temperature<0
+W.weather_key=F.weather_key and T.is_holiday=true and W.temperature<0 
 
-###########################
-#Combining OLAP operations#
-###########################
+#############################
+#Combining OLAP operations 1#
+#############################
 
 SELECT * FROM dim_date T, dim_demographics D, dim_fire_ward Z, dim_location L,
 dim_weather W, fact_fire_incidents F
@@ -48,6 +63,50 @@ Z.fire_ward_key=F.fire_ward_key and L.location_key=F.location_key and
 W.weather_key=F.weather_key and T.is_holiday=true and W.temperature<0
 and mother_tongue_official_percentage=100
 
+#############################
+#Combining OLAP operations 2#
+#############################
+
+SELECT T.year, sum(F.damage_cad) AS Total_Damage_in_CAD, 
+sum(casualties) AS Total_Casualties, 
+count(year) as number_of_incidents
+FROM dim_date T, fact_fire_incidents F, dim_demographics D
+WHERE T.date_key= F.date_key AND D.demographics_key=F.demographics_key
+AND mother_tongue_official_percentage=100
+GROUP BY ROLLUP(year)
+ORDER BY year
+
+#############################
+#Combining OLAP operations 3#
+#############################
+
+SELECT T.year, sum(F.damage_cad) AS Total_Damage_in_CAD, 
+sum(casualties) AS Total_Casualties, 
+count(year) as number_of_incidents
+ FROM dim_date T, dim_demographics D, dim_fire_ward Z, dim_location L,
+dim_weather W, fact_fire_incidents F
+WHERE T.date_key=F.date_key and D.demographics_key=F.demographics_key and
+Z.fire_ward_key=F.fire_ward_key and L.location_key=F.location_key and
+W.weather_key=F.weather_key and T.is_holiday=true and W.temperature<0 
+GROUP BY ROLLUP(year)
+ORDER BY year
+
+#############################
+#Combining OLAP operations 4#
+#############################
+
+SELECT T.time_of_day, sum(F.damage_cad) AS Total_Damage_in_CAD, 
+sum(casualties) AS Total_Casualties, 
+count(time_of_day) as number_of_incidents
+ FROM dim_date T, dim_demographics D, dim_fire_ward Z, dim_location L,
+dim_weather W, fact_fire_incidents F
+WHERE T.date_key=F.date_key and D.demographics_key=F.demographics_key and
+Z.fire_ward_key=F.fire_ward_key and L.location_key=F.location_key and
+W.weather_key=F.weather_key and T.is_holiday=true and W.temperature<0 
+GROUP BY ROLLUP(time_of_day)
+ORDER BY time_of_day
+
+
 ###################
 # Iceberg queries #
 ###################
@@ -55,7 +114,6 @@ and mother_tongue_official_percentage=100
 SELECT * FROM fact_fire_incidents F
 ORDER BY F.response_time DESC
 LIMIT 20
-
 
 ####################
 #Windowing queries #
@@ -72,11 +130,12 @@ and year= 2018 and month=01
 #Using the Window clause #
 ##########################
 
-SELECT D.dissemination_area, T.month, 
+SELECT D.dissemination_area, T.month, F.damage_cad,
 avg(F.damage_cad) OVER (PARTITION BY D.dissemination_area
 ORDER BY T.month 
 RANGE BETWEEN 1 PRECEDING 
 AND 1 FOLLOWING) AS moving_average_dollar_damage
 FROM fact_fire_incidents F, dim_date T, dim_demographics D
 WHERE F.date_key = T.date_key and D.demographics_key=F.demographics_key and T.year=2020
+
 
