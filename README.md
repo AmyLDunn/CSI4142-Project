@@ -1,6 +1,10 @@
 # CSI4142-Project
 
-Compilation instructions
+## Phase 4
+
+The code in the phase 4 folder can be run at any time without changes if you wish to view the output. It is directly connected to our always-up database.
+
+## Phase 2
 
 The code can be found in our gitHub repository here: AmyLDunn/CSI4142-Project (github.com)
 
