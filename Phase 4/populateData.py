@@ -80,14 +80,30 @@ create_header("Data summary")
 meanDf = df.describe().iloc[1]                                              #take average values
 transposedMeanDf = meanDf.to_frame().T.reset_index().drop('index', axis=1)  #take the mean of every value as a series, then transform it so the data is horizontal
                                                                             #then reset index, drop the text mean
-transposedMeanDf.insert(5, "holiday", [""])
-transposedMeanDf.insert(6, "time_of_day", ["afternoon"])
+transposedMeanDf = transposedMeanDf.drop("status", axis = 1)                #drop status
 
-repeatedMeanDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)]     #copy value 5 times
-repeatedMeanDf.iloc[0,7]=20                         
-repeatedMeanDf.iloc[1,17]=60000 
-repeatedMeanDf.iloc[2,15]=700
-repeatedMeanDf.iloc[3,8]=80
 
-print(repeatedMeanDf)
-repeatedMeanDf.to_csv('sample_data.csv', mode='a', index=False, header=False)             #add it to sample_data.csv
+transposedMeanDf.insert(5, "holiday", [""])                                 #replace holiday with blank
+transposedMeanDf.insert(6, "time_of_day", ["afternoon"])                    #replace time of day with afternoon
+
+intervalDf = df.describe().iloc[3:8].reset_index()                           #take min, 25%, 50%, 75% and max values
+                                                                                    #create test cases for temperature
+tempDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)].reset_index()       #copy value 5 times                                                     
+for index, value in tempDf.iterrows():                                              #take min, 25%, 50%, 75% and max temp as test cases
+    tempDf.iloc[index,8]= intervalDf.iloc[index, 6]   
+
+householdIncomeDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)].reset_index()    #create test cases for median household income
+for index, value in householdIncomeDf.iterrows():
+    householdIncomeDf.iloc[index,18]= intervalDf.iloc[index, 16]   
+
+dwellingDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)].reset_index()    #create test cases for number of ppl living in building
+for index, value in dwellingDf.iterrows():
+    dwellingDf.iloc[index,16]= intervalDf.iloc[index, 14]   
+
+humidityDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)].reset_index()    #create test cases for humidity
+for index, value in humidityDf.iterrows():
+    humidityDf.iloc[index,9]= intervalDf.iloc[index, 7]   
+                                                                                        #vertically append all test cases created above, and reset indexes
+                                                                                        #then drop redundant columns
+allTestCases = pd.concat([tempDf, householdIncomeDf, dwellingDf, humidityDf], axis = 0).reset_index().drop("index", axis = 1).drop("level_0", axis = 1)
+allTestCases.to_csv('sample_data.csv', mode='a', index=False, header=False)             #add test cases to sample_data.csv
