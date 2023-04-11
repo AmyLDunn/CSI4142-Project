@@ -171,3 +171,32 @@ y_true = random_forest.predict(X_test)
 create_header("Random forest - Classification report")
 print(classification_report(y_true, y_test, target_names = ['Bad', 'Good']))
 print("\nThe random forest took "+str(random_forest_time)+" seconds to train")
+
+# Datasets to answer questions
+sample_data = pd.read_csv('sample_data.csv')
+
+# Preprocessing
+sample_data['holiday'] = sample_data['holiday'].fillna("Not holiday")
+sample_data = pd.get_dummies(sample_data,
+                             columns = ['holiday', 'time_of_day'],
+                             prefix = ['holiday', 'time_of_day'])
+for column_name in sample_data.columns:
+    sample_data[column_name] = MinMaxScaler().fit_transform(np.array(sample_data[column_name]).reshape(-1, 1))
+
+# Running the models
+decision_tree_predictions = decision_tree.predict(sample_data)
+gradient_boosting_predictions = gradient_boosting.predict(sample_data)
+random_forest_predictions = random_forest.predict(sample_data)
+
+# Outputting the results
+create_header("Decision tree sample data predictions")
+decision_tree_data = sample_data.join(decision_tree_predictions)
+print(decision_tree_data)
+
+create_header("Gradient boosting sample data predictions")
+gradient_boosting_data = sample_data.join(gradient_boosting_predictions)
+print(gradient_boosting_data)
+
+create_header("Random forest sample data predictions")
+random_forest_data = sample_data.join(random_forest_predictions)
+print(random_forest_data)
