@@ -181,8 +181,14 @@ sample_data['holiday'] = sample_data['holiday'].fillna("Not holiday")
 sample_data = pd.get_dummies(sample_data,
                              columns = ['holiday', 'time_of_day'],
                              prefix = ['holiday', 'time_of_day'])
+for column_name in ['holiday_Boxing day','holiday_Canada day','holiday_Christmas day','holiday_Civic holiday','holiday_Easter sunday','holiday_Family day',
+                    'holiday_Good friday','holiday_Halloween','holiday_Labour day','holiday_New year\'s day','holiday_St. Patricks day','holiday_Thanksgiving',
+                    'holiday_Valentines day','holiday_Not holiday','time_of_day_evening','time_of_day_morning','time_of_day_afternoon','time_of_day_night']:
+    if column_name not in sample_data.columns:
+        sample_data[column_name] = 0
 for column_name in sample_data.columns:
     sample_data[column_name] = MinMaxScaler().fit_transform(np.array(sample_data[column_name]).reshape(-1, 1))
+sample_data = sample_data[[column_name for column_name in X_test.columns]]
 
 # Running the models
 decision_tree_predictions = decision_tree.predict(sample_data)
@@ -191,13 +197,13 @@ random_forest_predictions = random_forest.predict(sample_data)
 
 # Outputting the results
 create_header("Decision tree sample data predictions")
-decision_tree_data = sample_data.join(decision_tree_predictions)
-print(decision_tree_data)
+sample_data['result'] = decision_tree_predictions
+print(sample_data)
 
 create_header("Gradient boosting sample data predictions")
-gradient_boosting_data = sample_data.join(gradient_boosting_predictions)
-print(gradient_boosting_data)
+sample_data['result'] = gradient_boosting_predictions
+print(sample_data)
 
 create_header("Random forest sample data predictions")
-random_forest_data = sample_data.join(random_forest_predictions)
-print(random_forest_data)
+sample_data['result'] = random_forest_predictions
+print(sample_data)
