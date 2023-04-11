@@ -77,16 +77,17 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)
 create_header("Data summary")
 
-latSeries = df["latitude"]                                        #take all latitude data as series
-longSeries = df["longitude"]                                       #take all longitude data as series
-
-locationTestDf = pd.concat([latSeries, longSeries], axis=1)         #combine latitude and longitude into dataframe
-meanDf = df.describe().iloc[1].iloc[2:-1]
+meanDf = df.describe().iloc[1]                                              #take average values
 transposedMeanDf = meanDf.to_frame().T.reset_index().drop('index', axis=1)  #take the mean of every value as a series, then transform it so the data is horizontal
                                                                             #then reset index, drop the text mean
+transposedMeanDf.insert(5, "holiday", [""])
+transposedMeanDf.insert(6, "time_of_day", ["afternoon"])
 
-repeatedMeanDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(latSeries.size)]    #repeat the mean x times where x is the number of latitude data there is
-repeatedMeanDf = repeatedMeanDf.reset_index()                                           #reset the index
+repeatedMeanDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)]     #copy value 5 times
+repeatedMeanDf.iloc[0,7]=20                         
+repeatedMeanDf.iloc[1,17]=60000 
+repeatedMeanDf.iloc[2,15]=700
+repeatedMeanDf.iloc[3,8]=80
 
-sampleDataDf = pd.concat([locationTestDf, repeatedMeanDf], axis = 1)                    #concat location data with mean data
-sampleDataDf.to_csv('sample_data.csv', mode='a', index=False, header=False)             #add it to sample_data.csv
+print(repeatedMeanDf)
+repeatedMeanDf.to_csv('sample_data.csv', mode='a', index=False, header=False)             #add it to sample_data.csv
