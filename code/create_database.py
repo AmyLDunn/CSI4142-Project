@@ -17,6 +17,7 @@ import pandas as pd
 from datetime import date
 import json
 from pandas import json_normalize
+from sshtunnel import SSHTunnelForwarder
 
 
 
@@ -235,8 +236,14 @@ facts = facts[facts['fire_ward_key'].isin(dfStation['fire_ward_key'])]
 #########################
 
 #Using postgres 13
+server = SSHTunnelForwarder(
+    ssh_address=('174.114.0.126',8022),
+    ssh_username='remote_user',
+    ssh_password='remote',
+    remote_bind_address=('174.114.0.126',5432))
+server.start()
 #format: postgresql+psycopg2://username:password@host_address/database_name
-engine = sqlalchemy.create_engine('postgresql+psycopg2://postgres:CSI4142@localhost:5432/fire_hazard')
+engine = sqlalchemy.create_engine('postgresql+psycopg2://service:service@localhost:'+str(server.local_bind_port)+'/postgres')
 
 #loads demographic dimension
 result.to_sql(name='dim_demographics', con=engine,if_exists='append', index=False)
@@ -250,3 +257,5 @@ df_date.to_sql(name='dim_date', con=engine,if_exists='append', index=False)
 dfStation.to_sql(name='dim_fire_ward', con=engine,if_exists='append', index=False)
 #loads the fire incidents fact table 
 facts.to_sql(name='fact_fire_incidents', con=engine,if_exists='append', index=False)
+
+server.close()
