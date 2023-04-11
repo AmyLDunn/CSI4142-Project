@@ -172,6 +172,7 @@ create_header("Random forest - Classification report")
 print(classification_report(y_true, y_test, target_names = ['Bad', 'Good']))
 print("\nThe random forest took "+str(random_forest_time)+" seconds to train")
 
+
 # Datasets to answer questions
 sample_data = pd.read_csv('sample_data.csv')
 
