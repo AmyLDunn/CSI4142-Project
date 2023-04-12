@@ -83,10 +83,11 @@ transposedMeanDf = meanDf.to_frame().T.reset_index().drop('index', axis=1)  #tak
 transposedMeanDf = transposedMeanDf.drop("status", axis = 1)                #drop status
 
 
-transposedMeanDf.insert(5, "holiday", [""])                                 #replace holiday with blank
+transposedMeanDf.insert(5, "holiday", ["Not holiday"])                                 #replace holiday with regular day
 transposedMeanDf.insert(6, "time_of_day", ["afternoon"])                    #replace time of day with afternoon
 
 intervalDf = df.describe().iloc[3:8].reset_index()                           #take min, 25%, 50%, 75% and max values
+print(intervalDf)
                                                                                     #create test cases for temperature
 tempDf = transposedMeanDf.loc[transposedMeanDf.index.repeat(5)].reset_index()       #copy value 5 times                                                     
 for index, value in tempDf.iterrows():                                              #take min, 25%, 50%, 75% and max temp as test cases
